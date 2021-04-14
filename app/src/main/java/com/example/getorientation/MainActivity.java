@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     private float[] magValues, accValues;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         magSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         accSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
 
         listener = new SensorEventListener() {
             @Override
@@ -98,6 +101,20 @@ public class MainActivity extends AppCompatActivity {
 
         sensorManager.registerListener(listener, magSensor, SensorManager.SENSOR_DELAY_UI);
         sensorManager.registerListener(listener, accSensor, SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(listener);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        sensorManager.registerListener(listener, magSensor, SensorManager.SENSOR_DELAY_UI);
+        sensorManager.registerListener(listener, accSensor, SensorManager.SENSOR_DELAY_UI);
+
     }
 
     private float radian2Degree(float radian){
