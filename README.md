@@ -1,0 +1,2 @@
+# GetOrientation
+magnetic field + accelerometer
